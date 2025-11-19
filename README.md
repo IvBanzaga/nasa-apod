@@ -114,3 +114,14 @@ No necesitas instalar ninguna librería adicional para Next.js en Vercel, ya que
    - Configura las variables de entorno antes de desplegar.
 
 Más información: [Documentación oficial Vercel + Next.js](https://vercel.com/docs/frameworks/nextjs/overview)
+### Variables de entorno en Vercel
+
+Por seguridad, el archivo `.env` nunca se debe subir al repositorio.  
+Para usar variables de entorno en Vercel:
+
+1. Ve al panel de tu proyecto en Vercel.
+2. Entra en **Settings > Environment Variables**.
+3. Añade la variable `NEXT_PUBLIC_URL_API_KEY` y su valor.
+4. Guarda y vuelve a desplegar el proyecto.
+
+Así, Vercel inyecta las variables de entorno de forma segura durante el build y en producción.

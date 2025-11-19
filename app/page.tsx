@@ -12,7 +12,7 @@ export default function Home() {
 
   useEffect(() => {
     async function fetchAPOD() {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API_KEY}&date=${fechaInicio}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_URL_API}&date=${fechaInicio}`);
       const data = await res.json();
       setApodActual(data);
       // Traducir usando Google Translate web scraping (no oficial)
