@@ -1,0 +1,139 @@
+name: 🌟 Generate Daily Astronomy Ephemeris
+
+on:
+  # ⚠️ DESACTIVADO - Sin créditos de OpenAI
+  # Ejecutar diariamente a las 8:00 AM UTC (10:00 AM CEST)
+  # schedule:
+  #   - cron: "0 8 * * *"
+
+  # Permitir ejecución manual desde GitHub (mantener para cuando tengas créditos)
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Número de días a generar (default: 1)"
+        required: false
+        default: "1"
+        type: string
+      mode:
+        description: "Modo de generación"
+        required: false
+        default: "tomorrow"
+        type: choice
+        options:
+          - tomorrow
+          - week
+          - month
+          - multiple
+
+jobs:
+  generate-ephemeris:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "pnpm"
+
+      - name: 📦 Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+
+      - name: 📦 Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ✅ Validate environment variables
+        run: |
+          if [ -z "${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}" ]; then
+            echo "❌ NEXT_PUBLIC_SUPABASE_URL secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}" ]; then
+            echo "❌ NEXT_PUBLIC_SUPABASE_ANON_KEY secret is not set"
+            exit 1
+          fi
+          if [ -z "${{ secrets.OPENAI_API_KEY }}" ]; then
+            echo "❌ OPENAI_API_KEY secret is not set"
+            exit 1
+          fi
+          echo "✅ All required environment variables are configured"
+
+      - name: 🌟 Generate astronomy ephemeris
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          echo "🚀 Starting ephemeris generation..."
+          echo "📅 Current date: $(date)"
+          echo "🌍 Timezone: UTC"
+
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            MODE="${{ github.event.inputs.mode }}"
+            DAYS="${{ github.event.inputs.days }}"
+            
+            case $MODE in
+              "tomorrow")
+                echo "� Manual execution: Generating ephemeris for tomorrow..."
+                node generate-ephemeris.mjs tomorrow
+                ;;
+              "week")
+                echo "📅 Manual execution: Generating ephemeris for the next 7 days..."
+                node generate-ephemeris.mjs week
+                ;;
+              "month")
+                echo "📅 Manual execution: Generating ephemeris for the next 30 days..."
+                node generate-ephemeris.mjs month
+                ;;
+              "multiple")
+                echo "📅 Manual execution: Generating ephemeris for $DAYS days..."
+                node generate-ephemeris.mjs multiple $DAYS
+                ;;
+              *)
+                echo "📅 Manual execution: Default - generating ephemeris for tomorrow..."
+                node generate-ephemeris.mjs tomorrow
+                ;;
+            esac
+          else
+            echo "⏰ Scheduled execution: Generating ephemeris for tomorrow..."
+            node generate-ephemeris.mjs tomorrow
+          fi
+
+      - name: 📊 Display execution summary
+        if: always()
+        run: |
+          echo "📋 Execution Summary:"
+          echo "🕐 Execution time: $(date)"
+          echo "🔄 Trigger: ${{ github.event_name }}"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "👤 Manually triggered by: ${{ github.actor }}"
+            echo "⚙️ Mode: ${{ github.event.inputs.mode }}"
+            echo "📊 Days: ${{ github.event.inputs.days }}"
+          else
+            echo "⏰ Automatically triggered by schedule"
+          fi
+
+      - name: ✅ Notify success
+        if: success()
+        run: |
+          echo "🎉 ¡Efeméride astronómica generada exitosamente!"
+          echo "🌟 La nueva efeméride ya está disponible en la base de datos"
+          echo "� Revisa tu aplicación web para ver el contenido generado"
+
+      - name: ❌ Notify failure
+        if: failure()
+        run: |
+          echo "💥 Error en la generación de efemérides"
+          echo "🔍 Revisa los logs anteriores para identificar el problema"
+          echo "💡 Problemas comunes:"
+          echo "   • Variables de entorno no configuradas"
+          echo "   • Límites de API de OpenAI alcanzados"
+          echo "   • Problemas de conexión con Supabase"
+          echo "   • Errores de sintaxis en el código"
+          exit 1
