@@ -1,27 +1,37 @@
-# AstroTenerife
+# 🌌 AstroTenerife
+```sh
+AstroTenerife es una aplicación web que muestra la Imagen Astronómica del Día (APOD) 
+utilizando la API oficial de la NASA: [https://apod.nasa.gov/apod/](https://apod.nasa.gov/apod/).
+```
 
-AstroTenerife es una aplicación web que muestra la Imagen Astronómica del Día (APOD) utilizando la API oficial de la NASA: [https://apod.nasa.gov/apod/](https://apod.nasa.gov/apod/).
+## 🌌 ¿Qué es APOD?
 
-## ¿Qué es APOD?
+```sh
+APOD (Astronomy Picture of the Day) es un proyecto de la NASA 
+que publica diariamente una imagen o video relacionado con la astronomía, 
+acompañada de una explicación escrita por astrónomos profesionales.
+```
 
-APOD (Astronomy Picture of the Day) es un proyecto de la NASA que publica diariamente una imagen o video relacionado con la astronomía, acompañada de una explicación escrita por astrónomos profesionales.
+## 🚀 ¿Qué es la API de APOD?
 
-## ¿Qué es la API de APOD?
+```sh
+La API de APOD permite acceder programáticamente a la imagen, 
+vídeo y explicación astronómica del día. Proporciona datos en formato JSON 
+y es gratuita para uso personal y educativo.
 
-La API de APOD permite acceder programáticamente a la imagen, vídeo y explicación astronómica del día. Proporciona datos en formato JSON y es gratuita para uso personal y educativo.
-
-- **Endpoint principal:**  
+- **🌐 Endpoint principal:**  
   `https://api.nasa.gov/planetary/apod?api_key=TU_API_KEY`
 
-- **Parámetros útiles:**
+- **🔑 Parámetros útiles:**
   - `date`: Fecha en formato `YYYY-MM-DD` para obtener la imagen de un día específico.
-  - `api_key`: Tu clave personal de la NASA (puedes obtenerla gratis en [https://api.nasa.gov/](https://api.nasa.gov/)).
+  - `api_key`: Tu clave personal de la NASA
+	(puedes obtenerla gratis en [https://api.nasa.gov/](https://api.nasa.gov/)).
   - Ejemplo de uso:
     ```
     https://api.nasa.gov/planetary/apod?api_key=TU_API_KEY&date=2023-01-01
     ```
 
-- **Respuesta típica:**
+- **📄 Respuesta típica:**
   ```json
   {
     "date": "2023-01-01",
@@ -32,71 +42,79 @@ La API de APOD permite acceder programáticamente a la imagen, vídeo y explicac
     "url": "https://apod.nasa.gov/apod/image/2301/imagen.jpg"
   }
   ```
+	
+## ✨ Características
+  ```sh
+* 🌟 Visualización diaria de la imagen/vídeo astronómico.
+* 🌍 Traducción automática del título y la descripción al español.
+* 📱 Diseño moderno y responsivo.
+* 🔗 Botón para acceder al origen oficial de la imagen.
+* 🖼️ Soporte para imágenes, vídeos y miniaturas.
+  ```
 
-## Características
+## 🛠️ Uso
 
-- Visualización diaria de la imagen/vídeo astronómico.
-- Traducción automática del título y la descripción al español.
-- Diseño moderno y responsivo.
-- Botón para acceder al origen oficial de la imagen.
-- Soporte para imágenes, vídeos y miniaturas.
-
-## Uso
-
-1. Clona el repositorio:
+1. 🌀 Clona el repositorio:
    ```bash
    git clone <URL-del-repositorio>
    cd astronomy-ephemeris
    ```
 
-2. Instala las dependencias:
+2. 📦 Instala las dependencias:
    ```bash
    pnpm install
    ```
 
-3. Configura la variable de entorno en `.env`:
-   ```
+3. 🔧 Configura la variable de entorno en `.env`:
+   ```bash
    NEXT_PUBLIC_URL_API_KEY=https://api.nasa.gov/planetary/apod?api_key=TU_API_KEY
    ```
    Puedes obtener tu API Key gratuita en [https://api.nasa.gov/](https://api.nasa.gov/).
 
-4. Inicia el servidor de desarrollo:
+4. ▶️ Inicia el servidor de desarrollo:
    ```bash
    pnpm dev
    ```
 
-5. Accede a la aplicación en [http://localhost:3000](http://localhost:3000).
+5. 🌐 Accede a la aplicación en [http://localhost:3000](http://localhost:3000).
 
-## Estructura del proyecto
+## 📂 Estructura del proyecto
+```bash
+- `app/`: 🌟 Páginas principales y lógica de presentación.
+- `components/`: 🧩 Componentes reutilizables de la interfaz.
+- `lib/`: 🛠️ Utilidades y lógica de acceso a datos.
+- `public/`: 🌍 Recursos estáticos.
+```
+## 📜 Créditos
+```bash
+- 📸 Imágenes y datos: [NASA APOD](https://apod.nasa.gov/apod/)
+- 🌍 Traducción automática: Google Translate API pública
+```
 
-- `app/`: Páginas principales y lógica de presentación.
-- `components/`: Componentes reutilizables de la interfaz.
-- `lib/`: Utilidades y lógica de acceso a datos.
-- `public/`: Recursos estáticos.
-
-## Créditos
-
-- Imágenes y datos: [NASA APOD](https://apod.nasa.gov/apod/)
-- Traducción automática: Google Translate API pública
-
-## Licencia
-
+## ⚖️ Licencia
+```bash
 Este proyecto es de uso libre para fines educativos y personales.
-## Despliegue en Vercel
-
+```
+## 🌍 Despliegue en Vercel
+```bash
 Este proyecto está preparado para desplegarse fácilmente en Vercel.
+```
+### 📚 Librería necesaria
+```bash
+No necesitas instalar ninguna librería adicional para Next.js en Vercel, 
+ya que Vercel soporta Next.js de forma nativa.
+```
+### ⚙️ Configuración recomendada
 
-### Librería necesaria
-
-No necesitas instalar ninguna librería adicional para Next.js en Vercel, ya que Vercel soporta Next.js de forma nativa.
-
-### Configuración recomendada
-
-1. **Variables de entorno:**  
-   En el panel de Vercel, añade la variable `NEXT_PUBLIC_URL_API_KEY` con el mismo valor que tienes en tu `.env`.
-
-2. **Archivo de configuración opcional:**  
-   Si necesitas personalizar el comportamiento, puedes crear un archivo `vercel.json` en la raíz del proyecto. Ejemplo básico:
+1. **🔧 Variables de entorno:**  
+```bash
+   En el panel de Vercel, añade la variable `NEXT_PUBLIC_URL_API_KEY` 
+	 con el mismo valor que tienes en tu `.env`.
+```
+2. **📝 Archivo de configuración opcional:**  
+```bash
+   Si necesitas personalizar el comportamiento, puedes crear un archivo
+	 `vercel.json` en la raíz del proyecto. Ejemplo básico:
    ```json
    {
      "builds": [
@@ -105,17 +123,27 @@ No necesitas instalar ninguna librería adicional para Next.js en Vercel, ya que
    }
    ```
 
-3. **Comando de build:**  
-   Vercel ejecuta automáticamente `pnpm build` o `npm run build` según el gestor de paquetes detectado.
 
-4. **Pasos previos:**  
+3. **🏗️ Comando de build:**  
+```bash
+   Vercel ejecuta automáticamente `pnpm build` o `npm run build` 
+	 según el gestor de paquetes detectado. ```
+```
+
+4. **📋 Pasos previos:**  
+```bash
    - Sube tu código a GitHub, GitLab o Bitbucket.
    - Conecta el repositorio en Vercel y selecciona el proyecto.
    - Configura las variables de entorno antes de desplegar.
 
-Más información: [Documentación oficial Vercel + Next.js](https://vercel.com/docs/frameworks/nextjs/overview)
-### Variables de entorno en Vercel
+Más información: 
+[Documentación oficial Vercel + Next.js]
+(https://vercel.com/docs/frameworks/nextjs/overview)
+```
 
+### 🔐 Variables de entorno en Vercel
+
+```bash
 Por seguridad, el archivo `.env` nunca se debe subir al repositorio.  
 Para usar variables de entorno en Vercel:
 
@@ -125,3 +153,4 @@ Para usar variables de entorno en Vercel:
 4. Guarda y vuelve a desplegar el proyecto.
 
 Así, Vercel inyecta las variables de entorno de forma segura durante el build y en producción.
+```
